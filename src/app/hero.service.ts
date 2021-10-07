@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, fromEvent, interval, Observable, of } from 'rxjs';
-import { concatAll, map, mergeAll, take} from 'rxjs/operators';
+import { concatAll, filter, first, map, mergeAll, take} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http'
 import { Hero } from './hero';
 import { MessageService } from './message.service';
@@ -17,6 +17,12 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]> {
     const heroes = of(HEROES);
+    return heroes;
+  }
+
+  getHero(id: Number): Observable<Hero> {
+    const heroes = of(HEROES.find(x => x.id === id)!);
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
     return heroes;
   }
 
