@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, fromEvent, interval, Observable, of } from 'rxjs';
-import { concatAll, filter, first, map, mergeAll, take} from 'rxjs/operators';
+import { catchError, concatAll, filter, first, map, mergeAll, take} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http'
 import { Hero } from './hero';
 import { MessageService } from './message.service';
@@ -36,7 +36,7 @@ export class HeroService {
       {
         s.next(url);
         s.complete();
-      })), concatAll());
+      })), concatAll(), catchError(this.handleError<string>('getCose','')));
     return calcoloComplicato;
   }
 
@@ -67,5 +67,19 @@ export class HeroService {
   fetchData() : Promise<Response>
   {
     return fetch('https://localhost:5001/WeatherForecast');
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }
