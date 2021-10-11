@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -31,5 +32,13 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(){
+    // scrivi hero nella webapi
+    if(this.hero){
+      this.heroService.updateHero(this.hero).subscribe(
+        _ => this.location.back());
+    }
   }
 }

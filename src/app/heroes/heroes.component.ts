@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { MessageService } from '../message.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-heroes',
@@ -24,12 +25,14 @@ export class HeroesComponent implements OnInit {
     //this.getCose();
   }
 
+  /*
   onSelect(hero: Hero){
     this.selectedHero = hero;
     this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
     if(this.obs)
       this.obs!.unsubscribe();
   }
+*/
 
   getHeroes(){
     const myObserver : Observer<Hero[]> = {
@@ -47,6 +50,21 @@ export class HeroesComponent implements OnInit {
       {
         this.osservato = roba.toString();
       });
+  }
+
+  add(heroName: string){
+    if(!heroName)
+      return
+    heroName = heroName.trim();
+    this.heroService.addHero({name: heroName} as Hero).subscribe(
+      (h) => this.heroes.push(h)
+    );
+  }
+
+  delete(hero: Hero){
+    this.heroService.deleteHero(hero.id).subscribe(
+      (h) => this.heroes = this.heroes.filter(h => h.id !== hero.id)
+    );
   }
 
 }
