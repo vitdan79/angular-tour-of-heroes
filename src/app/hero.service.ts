@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵɵNgOnChangesFeature } from '@angular/core';
 import { from, fromEvent, interval, Observable, of } from 'rxjs';
 import { catchError, concatAll, filter, first, map, mergeAll, take, tap} from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
@@ -128,6 +128,19 @@ export class HeroService {
       tap(_ => console.log('deleteHero ' + id)),
       catchError(this.handleError<Hero>("addHero"))
     );
+    return result;
+  }
+
+  searchHero(term: string): Observable<Hero[]>{
+    if(!term.trim())
+      return of([]);
+    const url = `${this.heroesUrl}/?name=${term}`;
+    const result = this.http.get<Hero[]>(url).pipe(
+      tap(x => x.length > 0 ?
+        this.log(`found heroes matching "${term}"`) :
+        this.log(`no heroes matching "${term}"`)),
+      catchError(this.handleError<Hero[]>("searchHero", []))
+      );
     return result;
   }
 
