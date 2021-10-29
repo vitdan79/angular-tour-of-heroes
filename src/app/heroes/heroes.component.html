@@ -1,18 +1,21 @@
 <h2>My Heroes</h2>
+<mat-slider min="1" max="100" step="1" value="50"></mat-slider>
 <div>
-  <label for="new-hero">Hero name: </label>
-  <input id="new-hero" #heroName />
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Hero name: </mat-label>
+      <input matInput placeholder="Ex. Pizza" value="" id="new-hero" #heroName >
+    </mat-form-field>
+
   <!-- (click) passes input value to add() and then clears the input -->
-  <button class="add-button" (click)="add(heroName.value); heroName.value=''">
+  <button mat-raised-button color="primary" (click)="add(heroName.value); heroName.value=''">
     Add hero
   </button>
+</form>
 </div>
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </a>
-    <button class="delete" title="delete hero"
-      (click)="delete(hero)">x</button>
+    <button mat-raised-button color="primary" routerLink="/detail/{{hero.id}}"> {{hero.name}}</button>
+    <button mat-raised-button color="primary" title="delete hero" (click)="delete(hero)">x</button>
   </li>
 </ul>
