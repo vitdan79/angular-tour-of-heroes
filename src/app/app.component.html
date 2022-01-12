@@ -6,5 +6,11 @@
   <a routerLink="/dashboard">Dashboard</a>
   <a routerLink="/heroes">Heroes</a>
 </nav>
+<ngx-charts-pie-grid
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="single"
+  (select)="onSelect($event)">
+</ngx-charts-pie-grid>
 <router-outlet></router-outlet>
 <app-messages></app-messages>

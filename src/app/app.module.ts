@@ -17,6 +17,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule }  from '@angular/material/toolbar';
 import { MatButtonModule }  from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatInputModule} from '@angular/material/input';
     MatSliderModule,
     MatToolbarModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
